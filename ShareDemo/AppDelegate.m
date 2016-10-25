@@ -7,8 +7,11 @@
 //
 
 #import "AppDelegate.h"
+#import "XSDKRegister.h"
+#import <ShareSDK/ShareSDK.h>
+#import "WXApi.h"
 
-@interface AppDelegate ()
+@interface AppDelegate ()<WXApiDelegate>
 
 @end
 
@@ -16,7 +19,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    [XSDKRegister XSDKRegisterShareSDK];
     return YES;
 }
 
@@ -47,5 +50,15 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+//打开的是哪个应用
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString*)sourceApplication annotation:(id)annotation {
+        return [ShareSDK handleOpenURL:url sourceApplication:sourceApplication annotation:annotation wxDelegate:self];
+}
+
+//// NOTE: 9.0以后使用新API接口
+//- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options
+//{
+//    return [ShareSDK handleOpenURL:url wxDelegate:self];
+//}
 
 @end
